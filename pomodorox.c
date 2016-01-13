@@ -31,6 +31,10 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 #endif
 
+#define SCREEN_HEIGHT 100
+
+void clear_screen();
+
 int main(int argc, char **argv)
 {
     // locals
@@ -38,7 +42,8 @@ int main(int argc, char **argv)
     unsigned char m, s;
 
     // title
-    printf(ANSI_COLOR_GREEN "  Pomodorox\n\n");
+    clear_screen();
+    printf(ANSI_COLOR_GREEN "\n\n  Pomodorox  \n\n");
 
     // timer is running
     for(int i=(25*60); i>0; i--) {
@@ -47,7 +52,7 @@ int main(int argc, char **argv)
         s = i % 60;
 
         // show timer and wait 1 second
-        printf(ANSI_COLOR_RESET "    %02d:%02d\r", m, s);
+        printf(ANSI_COLOR_RESET "    %02d:%02d    \r", m, s);
         fflush(stdout);
         sleep(1);
     }
@@ -55,9 +60,9 @@ int main(int argc, char **argv)
     // timer end
     while (1) {
         if (flag)
-            printf(ANSI_COLOR_RED "         \r");
+            printf(ANSI_COLOR_RED "             \r");
         else
-            printf(ANSI_COLOR_RED "    00:00\r");
+            printf(ANSI_COLOR_RED "    00:00    \r");
 
         flag = !flag;
         fflush(stdout);
@@ -65,4 +70,10 @@ int main(int argc, char **argv)
     }
 
     return EXIT_SUCCESS;
+}
+
+void clear_screen()
+{
+    for (int i=0; i<SCREEN_HEIGHT; i++)
+        printf("\n");
 }
