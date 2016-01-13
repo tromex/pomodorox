@@ -34,28 +34,19 @@
 #define SCREEN_HEIGHT 100
 
 void clear_screen();
+void run_timer(unsigned int seconds);
 
 int main(int argc, char **argv)
 {
     // locals
     bool flag = false;
-    unsigned char m, s;
 
     // title
     clear_screen();
     printf(ANSI_COLOR_GREEN "\n\n  Pomodorox  \n\n");
 
-    // timer is running
-    for(int i=(25*60); i>0; i--) {
-        // compute minutes and seconds from i
-        m = i / 60;
-        s = i % 60;
-
-        // show timer and wait 1 second
-        printf(ANSI_COLOR_RESET "    %02d:%02d    \r", m, s);
-        fflush(stdout);
-        sleep(1);
-    }
+    // start pomodoro timer
+    run_timer(25 * 60);
 
     // timer end
     while (1) {
@@ -76,4 +67,19 @@ void clear_screen()
 {
     for (int i=0; i<SCREEN_HEIGHT; i++)
         printf("\n");
+}
+
+void run_timer(unsigned int seconds) {
+    unsigned char m, s;
+
+    for(int i=seconds; i>0; i--) {
+        // compute minutes and seconds from i
+        m = i / 60;
+        s = i % 60;
+
+        // show timer and wait 1 second
+        printf(ANSI_COLOR_RESET "    %02d:%02d    \r", m, s);
+        fflush(stdout);
+        sleep(1);
+    }
 }
