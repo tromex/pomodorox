@@ -31,19 +31,16 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 #endif
 
-#define SCREEN_HEIGHT 100
-
-void clear_screen();
 void run_timer(unsigned int seconds);
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
     // locals
     bool flag = false;
 
     // title
-    clear_screen();
-    printf(ANSI_COLOR_GREEN "\n\n  Pomodorox  \n\n");
+    printf(ANSI_COLOR_RED "pomodorox\n" ANSI_COLOR_RESET);
 
     // start pomodoro timer
     run_timer(25 * 60);
@@ -51,9 +48,9 @@ int main(int argc, char **argv)
     // timer end
     while (1) {
         if (flag)
-            printf(ANSI_COLOR_RED "             \r");
+            printf(ANSI_COLOR_RED "     \r");
         else
-            printf(ANSI_COLOR_RED "    00:00    \r");
+            printf(ANSI_COLOR_RED "00:00\r");
 
         flag = !flag;
         fflush(stdout);
@@ -63,22 +60,18 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 
-void clear_screen()
-{
-    for (int i=0; i<SCREEN_HEIGHT; i++)
-        printf("\n");
-}
-
-void run_timer(unsigned int seconds) {
+void
+run_timer(unsigned int seconds) {
     unsigned char m, s;
 
-    for(int i=seconds; i>0; i--) {
+    printf(ANSI_COLOR_RESET);
+    for(int i = seconds; i > 0; i--) {
         // compute minutes and seconds from i
         m = i / 60;
         s = i % 60;
 
         // show timer and wait 1 second
-        printf(ANSI_COLOR_RESET "    %02d:%02d    \r", m, s);
+        printf("%02d:%02d\r", m, s);
         fflush(stdout);
         sleep(1);
     }
